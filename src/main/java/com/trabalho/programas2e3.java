@@ -18,58 +18,64 @@ public class programas2e3{
 
     @SuppressWarnings({ "resource"})
     public static void main (String[] args) {
-        String respostaFinal = "";
-
-        System.out.println("Digite a frase:");
-        String respostaUsuario = new Scanner(System.in).nextLine();
-
-        respostaUsuario = respostaUsuario.replaceAll("\\s+","");
-
-        int a = 0;
-
-        while (respostaUsuario.indexOf("//") != -1 || respostaUsuario.indexOf("/*") != -1) {
-            if (respostaUsuario.indexOf("//") != -1 && respostaUsuario.indexOf("/*") != -1) {
-                String auxiliar = respostaUsuario.substring(0, respostaUsuario.indexOf("//"));
-                respostaUsuario = respostaUsuario.substring(0, auxiliar.indexOf("/*"))+auxiliar.substring((auxiliar.indexOf("*/")+2), auxiliar.length());
-            } else if (respostaUsuario.indexOf("//") != -1) {
-                respostaUsuario = respostaUsuario.substring(0, respostaUsuario.indexOf("//"));
-                respostaFinal = "Foi encontrado um Comentário de Linha, o resultado foi o seguinte:";
-            } else if (respostaUsuario.indexOf("/*") != -1) {
-                respostaUsuario = respostaUsuario.substring(0, respostaUsuario.indexOf("/*"))+respostaUsuario.substring((respostaUsuario.indexOf("*/")+2), respostaUsuario.length());
-                respostaFinal = "Foi encontrado um Comentário de Bloco, o resultado foi o seguinte:";
-            }
-            a ++;
-        }
-
-        if (a>1) {
-            System.out.println("Foram encontrados Comentários de Linha e de Bloco, o resultado foi o seguinte:");
-        } else {
-            System.out.println(respostaFinal);
-        }
-        System.out.println(respostaUsuario);
-
-        a=0;
-
-        while (!respostaUsuario.equals("")) {
-            a++;
-            if (Character.isLetter(respostaUsuario.charAt(0))) {
-                respostaUsuario = checaIdentificador(respostaUsuario, a+"º");
-            } else if (Character.isDigit(respostaUsuario.charAt(0))) {
-                respostaUsuario = checaNumero(respostaUsuario, a+"º");
-            } else if (Arrays.stream(opArititmetico).parallel().anyMatch(respostaUsuario::contains)) {
-                respostaUsuario = checaOpArititmetico(respostaUsuario, a+"º");
-            } else {
-                respostaUsuario = checaOpRelacional(respostaUsuario, a+"º");
-            }
-        }
-
-        System.out.println("Lexema |          Token");
-        System.out.println("---------------------------------");
-        for (int i=0;i<lexema.size();i++) {
-            System.out.print(lexema.get(i));
-            System.out.print("     | ");
-            System.out.println(token.get(i));
-        }
+    	try {
+	        String respostaFinal = "";
+	
+	        System.out.println("Digite a frase:");
+	        String respostaUsuario = new Scanner(System.in).nextLine();
+	
+	        respostaUsuario = respostaUsuario.replaceAll("\\s+","");
+	
+	        int a = 0;
+	
+	        while (respostaUsuario.indexOf("//") != -1 || respostaUsuario.indexOf("/*") != -1) {
+	            if (respostaUsuario.indexOf("//") != -1 && respostaUsuario.indexOf("/*") != -1) {
+	                String auxiliar = respostaUsuario.substring(0, respostaUsuario.indexOf("//"));
+	                respostaUsuario = respostaUsuario.substring(0, auxiliar.indexOf("/*"))+auxiliar.substring((auxiliar.indexOf("*/")+2), auxiliar.length());
+	            } else if (respostaUsuario.indexOf("//") != -1) {
+	                respostaUsuario = respostaUsuario.substring(0, respostaUsuario.indexOf("//"));
+	                respostaFinal = "Foi encontrado um Comentário de Linha, o resultado foi o seguinte:";
+	            } else if (respostaUsuario.indexOf("/*") != -1) {
+	                respostaUsuario = respostaUsuario.substring(0, respostaUsuario.indexOf("/*"))+respostaUsuario.substring((respostaUsuario.indexOf("*/")+2), respostaUsuario.length());
+	                respostaFinal = "Foi encontrado um Comentário de Bloco, o resultado foi o seguinte:";
+	            }
+	            a ++;
+	        }
+	
+	        if (a>1) {
+	            System.out.println("Foram encontrados Comentários de Linha e de Bloco, o resultado foi o seguinte:");
+	        } else {
+	            System.out.println(respostaFinal);
+	        }
+	        System.out.println(respostaUsuario);
+	
+	        a=0;
+	
+	        while (!respostaUsuario.equals("")) {
+	            a++;
+	            if (Character.isLetter(respostaUsuario.charAt(0))) {
+	                respostaUsuario = checaIdentificador(respostaUsuario, a+"º");
+	            } else if (Character.isDigit(respostaUsuario.charAt(0))) {
+	                respostaUsuario = checaNumero(respostaUsuario, a+"º");
+	            } else if (Arrays.stream(opArititmetico).parallel().anyMatch(respostaUsuario::contains)) {
+	                respostaUsuario = checaOpArititmetico(respostaUsuario, a+"º");
+	            } else {
+	                respostaUsuario = checaOpRelacional(respostaUsuario, a+"º");
+	            }
+	        }
+	
+	        System.out.println("Lexema |          Token");
+	        System.out.println("---------------------------------");
+	        for (int i=0;i<lexema.size();i++) {
+	            System.out.print(lexema.get(i));
+	            System.out.print("     | ");
+	            System.out.println(token.get(i));
+	        }
+    	} catch (Exception e) {
+    		System.out.println("Erro:");
+    		System.out.println(e.getCause());
+    		System.out.println(e.getStackTrace()[0].getLineNumber());
+    	}
     }
 
     @SuppressWarnings("unchecked")
